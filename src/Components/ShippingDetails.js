@@ -1,10 +1,15 @@
-import { useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ShippingContext } from "../Contexts/ShippingContext"
 
 export default function ShippingDetails() {
 	const navigate = useNavigate()
 	const { shipping, setShipping } = useContext(ShippingContext)
+	const [disableButton, setDisableButton] = useState(true)
+
+	useEffect(() => {
+		setDisableButton(Object.values(shipping).some(value => value === ""))
+	}, [shipping])
 
 	return (
 		<div className="container p-3 my-5 border rounded">
@@ -22,6 +27,7 @@ export default function ShippingDetails() {
 							aria-label="Full name"
 							value={shipping.fullname}
 							onChange={e => setShipping({ ...shipping, fullname: e.target.value })}
+							required
 						/>
 					</div>
 					<div className="col-12 col-md-6 mb-3">
@@ -38,6 +44,7 @@ export default function ShippingDetails() {
 							aria-label="Phone Number"
 							value={shipping.phonenumber}
 							onChange={e => setShipping({ ...shipping, phonenumber: e.target.value })}
+							required
 						/>
 					</div>
 				</div>
@@ -53,6 +60,7 @@ export default function ShippingDetails() {
 						aria-label="Shipping Address"
 						value={shipping.addressline1}
 						onChange={e => setShipping({ ...shipping, addressline1: e.target.value })}
+						required
 					/>
 					<input
 						type="text"
@@ -61,6 +69,7 @@ export default function ShippingDetails() {
 						aria-label="Shipping Address"
 						value={shipping.addressline2}
 						onChange={e => setShipping({ ...shipping, addressline2: e.target.value })}
+						required
 					/>
 				</div>
 				<div className="row">
@@ -76,6 +85,7 @@ export default function ShippingDetails() {
 							aria-label="ZIP"
 							value={shipping.zip}
 							onChange={e => setShipping({ ...shipping, zip: e.target.value })}
+							required
 						/>
 					</div>
 					<div className="col-12 col-md-6 mb-3">
@@ -90,6 +100,7 @@ export default function ShippingDetails() {
 							aria-label="City"
 							value={shipping.city}
 							onChange={e => setShipping({ ...shipping, city: e.target.value })}
+							required
 						/>
 					</div>
 				</div>
@@ -106,6 +117,7 @@ export default function ShippingDetails() {
 							aria-label="State"
 							value={shipping.state}
 							onChange={e => setShipping({ ...shipping, state: e.target.value })}
+							required
 						/>
 					</div>
 					<div className="col-12 col-md-6 mb-3">
@@ -120,12 +132,16 @@ export default function ShippingDetails() {
 							aria-label="Country"
 							value={shipping.country}
 							onChange={e => setShipping({ ...shipping, country: e.target.value })}
+							required
 						/>
 					</div>
 				</div>
 			</form>
 			<div className="text-center">
-				<button className="btn btn-warning" onClick={() => navigate("/checkout/payment")}>
+				<button
+					disabled={disableButton}
+					className="btn btn-warning"
+					onClick={() => navigate("/checkout/payment")}>
 					Add Payment Details
 				</button>
 			</div>
