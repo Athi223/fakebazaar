@@ -11,7 +11,7 @@ export default function Categories() {
 	}, [categories])
 
 	return (
-		<div>
+		<div className="mt-1">
 			<ul className="nav nav-tabs" id="myTab" role="tablist">
 				{categories.map((category, index) =>
 					<li key={index} className="nav-item" role="presentation">
@@ -22,7 +22,7 @@ export default function Categories() {
 			<div className="tab-content p-5" id="myTabContent">
 				{categories.map((category, catIndex) =>
 					<div key={catIndex} className={"tab-pane fade " + (selectedCategory === category ? "show active" : "")} id={category.replace(" ", "").replace("'", "") + "-tab-pane"} role="tabpanel" aria-labelledby={category.replace(" ", "").replace("'", "") + "-tab"} tabIndex="0">
-						<div className="row row-cols-1 row-cols-md-4 g-5">
+						<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
 							{products.filter(product=> product.category === category).map((product, index) => 
 								<div className='col' key={index}>
 									<Card product={product} />
