@@ -1,14 +1,49 @@
 import { useContext } from "react"
 import { NavLink, Outlet } from "react-router-dom"
 import { AuthContext } from "../Contexts/AuthContext"
-import Cart from "./Cart"
-import Authenticate from "./Authenticate"
-import Notification from "./Notifications"
+import { StoreContext } from "../Contexts/StoreContext"
 import { LogIn, ShoppingCart, User } from "react-feather"
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
+import Cart from "./Cart"
+import Notification from "./Notifications"
 import Product from "./Product"
 
+const provider = new GoogleAuthProvider()
+
 export default function Layout() {
-	const { authToken, setAuthToken } = useContext(AuthContext)
+	const { user, setUser } = useContext(AuthContext)
+	const { cart } = useContext(StoreContext)
+
+	const login = () => {
+		const auth = getAuth()
+		signInWithPopup(auth, provider)
+			.then(result => {
+				// This gives you a Google Access Token. You can use it to access the Google API.
+				const credential = GoogleAuthProvider.credentialFromResult(result)
+				const token = credential.accessToken
+				// The signed-in user info.
+				const user = result.user
+				setUser(
+					JSON.stringify({
+						uid: user.uid,
+						name: user.displayName,
+						email: user.email,
+						accessToken: token,
+					})
+				)
+			})
+			.catch(error => console.log(error))
+	}
+
+	const logout = () => {
+		const auth = getAuth()
+		signOut(auth)
+			.then(() => {
+				// Sign-out successful.
+				setUser("")
+			})
+			.catch(error => console.log(error))
+	}
 
 	return (
 		<div>
@@ -39,7 +74,7 @@ export default function Layout() {
 									Categories
 								</NavLink>
 							</li>
-							{authToken && (
+							{user && (
 								<li className="nav-item">
 									<NavLink className="nav-link" to="/checkout">
 										Checkout
@@ -55,8 +90,11 @@ export default function Layout() {
 									data-bs-target="#Cart"
 									aria-controls="Cart"
 								/>
+								<span className="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger">
+									{cart && cart.length ? cart.length : null}
+								</span>
 							</button>
-							{authToken ? (
+							{user ? (
 								<div className="dropdown">
 									<button
 										className="btn dropdown-toggle"
@@ -67,15 +105,15 @@ export default function Layout() {
 									</button>
 									<ul className="dropdown-menu dropdown-menu-end">
 										<li>
-											<button className="dropdown-item" onClick={() => setAuthToken("")}>
+											<button className="dropdown-item" onClick={logout}>
 												Logout
 											</button>
 										</li>
 									</ul>
 								</div>
 							) : (
-								<button className="btn" data-bs-toggle="modal" data-bs-target="#authenticateModal">
-									<LogIn size={20} />
+								<button className="btn">
+									<LogIn size={20} onClick={login} />
 								</button>
 							)}
 						</div>
@@ -83,7 +121,6 @@ export default function Layout() {
 				</div>
 			</nav>
 			<Outlet />
-			<Authenticate />
 			<Product />
 			<Cart />
 			<Notification />

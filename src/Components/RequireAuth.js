@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom"
 import { AuthContext } from "../Contexts/AuthContext"
 
 export default function RequireAuth({ children }) {
-	const { authToken } = useContext(AuthContext)
+	const { user } = useContext(AuthContext)
 
-	return authToken ? children : <Navigate to="/" replace />
+	return user ? children : <Navigate to="/" replace />
 }

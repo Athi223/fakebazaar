@@ -11,7 +11,7 @@ export default function Checkout() {
 	const location = useLocation()
 
 	useEffect(() => {
-		setAmount(cart.reduce((acc, productId) => acc + products[productId].price, 0))
+		setAmount((cart && cart.reduce((acc, productId) => acc + products[productId].sale_price, 0)) || 0)
 		switch (location.pathname) {
 			case "/checkout":
 				setTitle("Preview your Cart")
@@ -43,7 +43,7 @@ export default function Checkout() {
 							Continue Shopping
 						</button>
 					) : (
-						<h3 className="m-0">Total: ${amount}</h3>
+						<h3 className="m-0">Total: ₹{amount && amount.toFixed(2)}</h3>
 					)}
 				</div>
 			</div>

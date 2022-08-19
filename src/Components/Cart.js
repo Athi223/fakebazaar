@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom"
 
 export default function Cart() {
 	const navigate = useNavigate()
-	const { authToken } = useContext(AuthContext)
+	const { user } = useContext(AuthContext)
 	const { cart, setCart, products } = useContext(StoreContext)
-	const removeFromCart = productId => setCart(_cart => _cart.filter(id => id !== productId - 1))
+	const removeFromCart = productId => setCart(_cart => _cart.filter((_, index) => index !== _cart.indexOf(productId)))
 
 	return (
 		<div className="offcanvas offcanvas-end" tabIndex="-1" id="Cart" aria-labelledby="CartLabel">
@@ -18,10 +18,10 @@ export default function Cart() {
 				<button className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			</div>
 			<div className="offcanvas-body">
-				{cart.length ? (
+				{cart && cart.length ? (
 					<div>
 						<div className="d-grid">
-							{authToken ? (
+							{user ? (
 								<button
 									className="btn btn-warning btn-block w-50 mx-auto"
 									data-bs-dismiss="offcanvas"
@@ -39,18 +39,24 @@ export default function Cart() {
 						</div>
 						{cart.map((id, index) => (
 							<div key={index} className="card text-center w-75 mx-auto mt-3">
-								<img
-									src={products[id].image}
-									className="p-2 mx-auto"
-									width={150}
-									height={150}
-									alt={products[id].title}
-								/>
+								<img src={products[id].image_url} className="p-2 mx-auto" alt={products[id].title} />
 								<div className="card-body">
 									<h6 className="card-title">{products[id].title}</h6>
 								</div>
 								<div className="card-footer d-flex justify-content-between">
-									<h4 className="card-text">${products[id].price}</h4>
+									<h5 className="card-text">
+										₹
+										{products[id].market_price === products[id].sale_price ? (
+											products[id].sale_price
+										) : (
+											<>
+												<span className="text-decoration-line-through text-danger">
+													{products[id].market_price}
+												</span>
+												<span className="text-success"> {products[id].sale_price}</span>
+											</>
+										)}
+									</h5>
 									<button
 										className="btn btn-sm btn-danger m-0"
 										onClick={() => removeFromCart(products[id].id)}>
