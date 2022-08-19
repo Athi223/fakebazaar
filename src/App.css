@@ -1,10 +1,19 @@
+
 .bg-navbar {
     background-color: var(--bs-teal);
 }
 
-.card:hover {
+.row .card:hover {
 	transform: scale(1.05);
 	transition-duration: 0.5s;
+}
+
+.top-10 {
+  top: 10% !important;
+}
+
+.start-90 {
+  left: 90% !important;
 }
 
 button:disabled {
