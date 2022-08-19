@@ -33,6 +33,15 @@ export default function PreviewCart() {
 													{products[id].market_price}
 												</span>
 												<span className="text-success"> {products[id].sale_price} </span>
+												<span className="text-secondary">
+													(-
+													{(
+														((products[id].market_price - products[id].sale_price) /
+															products[id].market_price) *
+														100
+													).toFixed(0)}
+													%)
+												</span>
 											</>
 										)}
 									</h5>
