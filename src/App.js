@@ -18,14 +18,35 @@ import PreviewCart from "./Components/PreviewCart"
 import ShippingDetails from "./Components/ShippingDetails"
 import PaymentDetails from "./Components/PaymentDetails"
 import Confirmation from "./Components/Confirmation"
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app"
+// TODO: Add SDKs for Firebase products that you want to use
+import { getDatabase, ref, child, get, set } from "firebase/database"
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+	apiKey: "AIzaSyCiTm4GF9uFclQKhW20PS_t3BHN8knBIp8",
+	authDomain: "fakebazaar-42069.firebaseapp.com",
+	databaseURL: "https://fakebazaar-42069-default-rtdb.asia-southeast1.firebasedatabase.app",
+	projectId: "fakebazaar-42069",
+	storageBucket: "fakebazaar-42069.appspot.com",
+	messagingSenderId: "410714308136",
+	appId: "1:410714308136:web:0257bfcb6ca1926ec83f1d",
+}
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig)
+const database = getDatabase(app)
 
 export default function App() {
+	// TODO: remove fakestoreapi usage completely
 	const baseURL = "https://fakestoreapi.com"
-	const [authToken, setAuthToken] = useCookie("authToken", "")
+	const [user, setUser] = useCookie("user", "")
 	const [products, setProducts] = useState([])
 	const [selectedProduct, setSelectedProduct] = useState({})
 	const [categories, setCategories] = useState([])
-	const [cart, setCart] = useState([])
+	const [cart, setCart] = useState(null)
 	const [shipping, setShipping] = useState({
 		fullname: "",
 		phonenumber: "",
@@ -44,22 +65,59 @@ export default function App() {
 	})
 
 	useEffect(() => {
-		fetch(`${baseURL}/products`)
-			.then(response => response.json())
-			.then(json => setProducts(json))
-			.catch(error => console.log(error))
-
-		fetch(`${baseURL}/products/categories`)
-			.then(response => response.json())
-			.then(json => setCategories(json))
-			.catch(error => console.log(error))
+		let categories = new Set()
+		get(child(ref(database), "products/"))
+			.then(snapshot => {
+				if (snapshot.exists()) {
+					const products = snapshot.val().map((product, index) => {
+						categories.add(product.category)
+						product.id = index
+						return product
+					})
+					setProducts(products)
+					setCategories([...categories])
+				} else {
+					console.log("No data available")
+				}
+			})
+			.catch(error => {
+				console.error(error)
+			})
 
 		const toastElList = document.querySelectorAll(".toast")
 		toastElList.forEach(toastEl => new bootstrap.Toast(toastEl, {}))
-	}, [baseURL])
+	}, [])
+
+	useEffect(() => {
+		if (user) {
+			const _user = JSON.parse(user)
+			get(child(ref(database), `users/${_user.uid}/cart`))
+				.then(snapshot => {
+					if (snapshot.exists()) {
+						setCart(snapshot.val())
+					} else {
+						console.log("Cart Empty")
+					}
+				})
+				.catch(error => {
+					console.error(error)
+				})
+		}
+	}, [user])
+
+	useEffect(() => {
+		if (user) {
+			const _user = JSON.parse(user)
+			if (cart !== null) {
+				set(child(ref(database), "users/" + _user.uid), {
+					cart: cart ?? [],
+				})
+			}
+		}
+	}, [user, cart])
 
 	return (
-		<AuthContext.Provider value={{ authToken, setAuthToken, baseURL }}>
+		<AuthContext.Provider value={{ user, setUser, baseURL }}>
 			<BootstrapContext.Provider value={{ bootstrap }}>
 				<StoreContext.Provider
 					value={{
