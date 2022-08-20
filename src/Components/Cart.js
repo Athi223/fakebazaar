@@ -1,11 +1,11 @@
 import { useContext } from "react"
-import { AuthContext } from "../Contexts/AuthContext"
+import { FirebaseContext } from "../Contexts/FirebaseContext"
 import { StoreContext } from "../Contexts/StoreContext"
 import { useNavigate } from "react-router-dom"
 
 export default function Cart() {
 	const navigate = useNavigate()
-	const { user } = useContext(AuthContext)
+	const { user } = useContext(FirebaseContext)
 	const { cart, setCart, products } = useContext(StoreContext)
 	const removeFromCart = productId => setCart(_cart => _cart.filter((_, index) => index !== _cart.indexOf(productId)))
 

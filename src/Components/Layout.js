@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { NavLink, Outlet } from "react-router-dom"
-import { AuthContext } from "../Contexts/AuthContext"
+import { FirebaseContext } from "../Contexts/FirebaseContext"
 import { StoreContext } from "../Contexts/StoreContext"
 import { LogIn, ShoppingCart, User } from "react-feather"
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
@@ -11,7 +11,7 @@ import Product from "./Product"
 const provider = new GoogleAuthProvider()
 
 export default function Layout() {
-	const { user, setUser } = useContext(AuthContext)
+	const { user, setUser } = useContext(FirebaseContext)
 	const { cart } = useContext(StoreContext)
 
 	const login = () => {
@@ -78,6 +78,13 @@ export default function Layout() {
 								<li className="nav-item">
 									<NavLink className="nav-link" to="/checkout">
 										Checkout
+									</NavLink>
+								</li>
+							)}
+							{user && (
+								<li className="nav-item">
+									<NavLink className="nav-link" to="/orders">
+										Orders
 									</NavLink>
 								</li>
 							)}
