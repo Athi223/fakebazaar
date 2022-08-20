@@ -1,9 +1,9 @@
 import { useContext } from "react"
 import { Navigate } from "react-router-dom"
-import { AuthContext } from "../Contexts/AuthContext"
+import { FirebaseContext } from "../Contexts/FirebaseContext"
 
 export default function RequireAuth({ children }) {
-	const { user } = useContext(AuthContext)
+	const { user } = useContext(FirebaseContext)
 
 	return user ? children : <Navigate to="/" replace />
 }
