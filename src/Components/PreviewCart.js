@@ -1,9 +1,7 @@
 import { useContext } from "react"
-import { useNavigate } from "react-router-dom"
 import { StoreContext } from "../Contexts/StoreContext"
 
 export default function PreviewCart() {
-	const navigate = useNavigate()
 	const { cart, setCart, products } = useContext(StoreContext)
 	const removeFromCart = productId => setCart(_cart => _cart.filter((_, index) => index !== _cart.indexOf(productId)))
 
@@ -11,6 +9,7 @@ export default function PreviewCart() {
 		<div className="container-fluid">
 			{cart && cart.length ? (
 				<div className="text-center">
+					<h3 className="mb-4">Preview your Cart</h3>
 					<div className="d-flex flex-row flex-nowrap overflow-auto">
 						{cart.map((id, index) => (
 							<div key={index} className="card text-center me-3 mb-3" style={{ minWidth: 300 }}>
@@ -54,16 +53,10 @@ export default function PreviewCart() {
 							</div>
 						))}
 					</div>
-					<button className="btn btn-warning mt-3" onClick={() => navigate("/checkout/shipping")}>
-						Add Shipping Details
-					</button>
 				</div>
 			) : (
 				<div className="text-center p-4">
 					<h5 className="mb-3">Your cart is empty!</h5>
-					<button className="btn btn-primary" onClick={() => navigate("/")}>
-						Continue Shopping
-					</button>
 				</div>
 			)}
 		</div>
