@@ -1,48 +1,78 @@
-import { useState, useEffect } from "react"
-import { loadStripe } from "@stripe/stripe-js"
-import { Elements } from "@stripe/react-stripe-js"
+import { useContext, useEffect } from "react"
+import { Calendar, CreditCard, Key } from "react-feather"
+import { CheckoutContext } from "../Contexts/CheckoutContext"
 
-import CheckoutForm from "./CheckoutForm"
-
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-// This is your test publishable API key.
-const stripePromise = loadStripe(
-	"pk_test_51LWxAiSJZv3p8EVz5xfRXLNDCy5Dbb1B3FPR67wIkaIQhxX7hh82tgDqu5j2PlVQzBN8SLAY9hysoVtMCK7NEu4c00YCmpvHgg"
-)
-
-export default function App() {
-	const [clientSecret, setClientSecret] = useState("")
+export default function PaymentDetails() {
+	const { setCheckoutButton, payment, setPayment } = useContext(CheckoutContext)
 
 	useEffect(() => {
-		// Create PaymentIntent as soon as the page loads
-		fetch("http://localhost:4242/create-payment-intent", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				paymentMethodType: "card",
-				currency: "usd",
-			}),
+		setCheckoutButton(checkoutButton => {
+			return {
+				...checkoutButton,
+				disabled:
+					payment.cardnumber.length !== 16 || payment.expirydate.length !== 4 || payment.cvv.length !== 3,
+			}
 		})
-			.then(res => res.json())
-			.then(data => setClientSecret(data.clientSecret))
-	}, [])
-
-	const appearance = {
-		theme: "stripe",
-	}
-	const options = {
-		clientSecret,
-		appearance,
-	}
+	}, [setCheckoutButton, payment])
 
 	return (
-		<div className="p-3 my-5 border rounded shadow mx-auto text-center" style={{ maxWidth: "30rem" }}>
-			{clientSecret && (
-				<Elements options={options} stripe={stripePromise} key={clientSecret}>
-					<CheckoutForm />
-				</Elements>
-			)}
+		<div className="container-fluid">
+			<h3 className="text-center mb-4">Payment Details</h3>
+			<div className="card border rounded shadow mx-auto" style={{ maxWidth: "25rem" }}>
+				<div className="card-body">
+					<label className="form-label required fw-semibold">Number</label>
+					<div className="input-group mb-3">
+						<span className="input-group-text">
+							<CreditCard />
+						</span>
+						<input
+							value={payment.cardnumber}
+							onChange={e => setPayment({ ...payment, cardnumber: e.target.value })}
+							minLength={16}
+							maxLength={16}
+							type="text"
+							className="form-control"
+							placeholder="Card Number"
+							aria-label="Card Number"
+							aria-describedby="Card Number"
+							required
+						/>
+					</div>
+					<label className="form-label fw-semibold">Expiry</label>
+					<div className="input-group mb-3">
+						<span className="input-group-text">
+							<Calendar />
+						</span>
+						<input
+							value={payment.expirydate}
+							onChange={e => setPayment({ ...payment, expirydate: e.target.value })}
+							type="text"
+							className="form-control"
+							placeholder="MM/YY"
+							aria-label="MM/YY"
+							required
+						/>
+					</div>
+					<label className="form-label fw-semibold">CVV</label>
+					<div className="input-group">
+						<span className="input-group-text">
+							<Key />
+						</span>
+						<input
+							value={payment.cvv}
+							onChange={e => setPayment({ ...payment, cvv: e.target.value })}
+							type="text"
+							minLength={3}
+							maxLength={3}
+							className="form-control"
+							placeholder="CVV"
+							aria-label="CVV"
+							id="cvv"
+							required
+						/>
+					</div>
+				</div>
+			</div>
 		</div>
 	)
 }
