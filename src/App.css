@@ -1,11 +1,10 @@
-
 .bg-navbar {
     background-color: var(--bs-teal);
 }
 
 .row .card:hover {
-	transform: scale(1.05);
-	transition-duration: 0.5s;
+	transform: scale(1.05) perspective(500px) rotateX(3deg);
+	transition-duration: 0.25s;
 }
 
 .top-10 {
