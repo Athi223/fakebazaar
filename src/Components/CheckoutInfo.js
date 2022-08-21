@@ -50,9 +50,7 @@ export default function CheckoutInfo({ setProgress }) {
 							alert("Invalid Card Details")
 						}
 					})
-					.catch(error => {
-						console.error(error)
-					})
+					.catch(error => console.error(error))
 				break
 			default:
 				navigate("/orders")

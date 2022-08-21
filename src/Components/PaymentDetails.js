@@ -34,7 +34,6 @@ export default function PaymentDetails() {
 							className="form-control"
 							placeholder="Card Number"
 							aria-label="Card Number"
-							aria-describedby="Card Number"
 							required
 						/>
 					</div>

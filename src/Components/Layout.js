@@ -18,10 +18,8 @@ export default function Layout() {
 		const auth = getAuth()
 		signInWithPopup(auth, provider)
 			.then(result => {
-				// This gives you a Google Access Token. You can use it to access the Google API.
 				const credential = GoogleAuthProvider.credentialFromResult(result)
 				const token = credential.accessToken
-				// The signed-in user info.
 				const user = result.user
 				setUser(
 					JSON.stringify({
@@ -32,17 +30,14 @@ export default function Layout() {
 					})
 				)
 			})
-			.catch(error => console.log(error))
+			.catch(error => console.error(error))
 	}
 
 	const logout = () => {
 		const auth = getAuth()
 		signOut(auth)
-			.then(() => {
-				// Sign-out successful.
-				setUser("")
-			})
-			.catch(error => console.log(error))
+			.then(() => setUser(""))
+			.catch(error => console.error(error))
 	}
 
 	return (
@@ -54,7 +49,6 @@ export default function Layout() {
 					</a>
 					<button
 						className="navbar-toggler"
-						type="button"
 						data-bs-toggle="collapse"
 						data-bs-target="#navbarContent"
 						aria-controls="navbarContent"
@@ -105,7 +99,6 @@ export default function Layout() {
 								<div className="dropdown">
 									<button
 										className="btn dropdown-toggle"
-										type="button"
 										data-bs-toggle="dropdown"
 										aria-expanded="false">
 										<User size={20} />
@@ -129,7 +122,7 @@ export default function Layout() {
 			</nav>
 			<Outlet />
 			<Product />
-			<Cart />
+			<Cart login={login} />
 			<Notification />
 		</div>
 	)

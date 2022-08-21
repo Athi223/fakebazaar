@@ -16,63 +16,61 @@ export default function Orders() {
 					setOrders(snapshot.val())
 				}
 			})
-			.catch(error => {
-				console.error(error)
-			})
+			.catch(error => console.error(error))
 	}, [database, user])
+
 	return (
 		<div className="m-5">
 			<h3 className="text-center mb-4">Orders</h3>
-			{orders
-				? Object.keys(orders).map((orderId, orderIndex) => (
-						<div key={orderIndex} className="border rounded p-2">
-							<h4>
-								OrderID: <span className="text-secondary">{orderId}</span>
-							</h4>
-							<div className="d-flex flex-row flex-nowrap overflow-auto">
-								{orders[orderId].map((id, index) => (
-									<div key={index} className="card text-center me-3" style={{ minWidth: 300 }}>
-										<img
-											src={products[id].image_url.replace("/s/", "/m/").replace("/mm/", "/m/")}
-											className="card-img-top"
-											alt={products[id].title}
-										/>
-										<div className="card-body">
-											<h6 className="card-title">{products[id].title}</h6>
-										</div>
-										<div className="card-footer d-flex justify-content-between">
-											<h5 className="card-text">
-												₹
-												{products[id].market_price === products[id].sale_price ? (
-													products[id].sale_price
-												) : (
-													<>
-														<span className="text-decoration-line-through text-danger">
-															{products[id].market_price}
-														</span>
-														<span className="text-success">
-															{" "}
-															{products[id].sale_price}{" "}
-														</span>
-														<span className="text-secondary">
-															(-
-															{(
-																((products[id].market_price - products[id].sale_price) /
-																	products[id].market_price) *
-																100
-															).toFixed(0)}
-															%)
-														</span>
-													</>
-												)}
-											</h5>
-										</div>
+			{products.length && orders ? (
+				Object.keys(orders).map((orderId, orderIndex) => (
+					<div key={orderIndex} className="border rounded p-2">
+						<h4>
+							OrderID: <span className="text-secondary">{orderId}</span>
+						</h4>
+						<div className="d-flex flex-row flex-nowrap overflow-auto">
+							{orders[orderId].map((id, index) => (
+								<div key={index} className="card text-center me-3" style={{ minWidth: 300 }}>
+									<img
+										src={products[id].image_url.replace("/s/", "/m/").replace("/mm/", "/m/")}
+										className="card-img-top"
+										alt={products[id].title}
+									/>
+									<div className="card-body">
+										<h6 className="card-title">{products[id].title}</h6>
 									</div>
-								))}
-							</div>
+									<div className="card-footer d-flex justify-content-between">
+										<h5 className="card-text">
+											₹
+											{products[id].market_price === products[id].sale_price ? (
+												products[id].sale_price
+											) : (
+												<>
+													<span className="text-decoration-line-through text-danger">
+														{products[id].market_price}
+													</span>
+													<span className="text-success"> {products[id].sale_price} </span>
+													<span className="text-secondary">
+														(-
+														{(
+															((products[id].market_price - products[id].sale_price) /
+																products[id].market_price) *
+															100
+														).toFixed(0)}
+														%)
+													</span>
+												</>
+											)}
+										</h5>
+									</div>
+								</div>
+							))}
 						</div>
-				  ))
-				: "No orders"}
+					</div>
+				))
+			) : (
+				<h3 className="text-center">No orders placed</h3>
+			)}
 		</div>
 	)
 }
