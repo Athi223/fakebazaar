@@ -136,6 +136,20 @@ export default function ShippingDetails() {
 								required
 							/>
 						</div>
+						<div className="mb-3">
+							<div className="form-check">
+								<input
+									type="checkbox"
+									id="saveDetails"
+									className="form-check-input"
+									value={shipping.saveDetails}
+									onChange={e => setShipping({ ...shipping, saveDetails: e.target.checked })}
+								/>
+								<label className="form-check-label" htmlFor="saveDetails">
+									Save these details for future orders
+								</label>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>

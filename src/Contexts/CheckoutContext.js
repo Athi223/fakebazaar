@@ -16,6 +16,7 @@ export default function CheckoutProvider({ children }) {
 		state: "",
 		country: "",
 		zip: "",
+		saveDetails: false,
 	})
 	const [payment, setPayment] = useState({
 		cardnumber: "",
