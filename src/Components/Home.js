@@ -19,7 +19,7 @@ export default function Home() {
 
 	return (
 		<div className="m-4">
-			<h4 className="text-info mb-3">Highest Discounts!</h4>
+			<h3 className="text-center text-primary mb-3">Highest Discounts!</h3>
 			<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
 				{discountedProducts
 					.filter((_, index) => index < 12)
@@ -30,7 +30,7 @@ export default function Home() {
 					))}
 			</div>
 			<hr className="my-4" />
-			<h4 className="text-info mb-3">Highest Rated!</h4>
+			<h3 className="text-center text-primary mb-3">Highest Rated!</h3>
 			<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
 				{highestRatedProducts
 					.filter((_, index) => index < 12)
