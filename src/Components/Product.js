@@ -38,7 +38,9 @@ export default function Product() {
 								/>
 							</div>
 							<div className="col-12 col-md-6 text-end">
-								<button className="btn btn-primary mb-3" onClick={() => addToCart(selectedProduct.id)}>
+								<button
+									className="btn btn-lg btn-warning mb-3"
+									onClick={() => addToCart(selectedProduct.id)}>
 									Add to Cart
 								</button>
 								<h3 className="mb-3">
@@ -64,7 +66,7 @@ export default function Product() {
 									)}
 								</h3>
 								<p className="fs-4">
-									<span className="badge text-bg-warning">{selectedProduct.brand}</span>
+									<span className="badge text-bg-primary">{selectedProduct.brand}</span>
 								</p>
 								{selectedProduct.rating ? (
 									<p className="fs-5">

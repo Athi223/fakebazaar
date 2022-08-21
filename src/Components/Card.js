@@ -48,7 +48,7 @@ export default function Card({ product }) {
 						</>
 					)}
 				</h5>
-				<button className="btn btn-sm btn-primary m-0" onClick={e => addToCart(e, product.id)}>
+				<button className="btn btn-sm btn-warning m-0" onClick={e => addToCart(e, product.id)}>
 					Add to Cart
 				</button>
 			</div>
