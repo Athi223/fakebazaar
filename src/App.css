@@ -3,7 +3,7 @@
 }
 
 .row .card:hover {
-	transform: scale(1.05) perspective(500px) rotateX(3deg);
+	transform: scale(1.025) perspective(500px) rotateX(3deg);
 	transition-duration: 0.25s;
 }
 
