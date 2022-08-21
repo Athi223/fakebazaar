@@ -7,6 +7,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/
 import Cart from "./Cart"
 import Notification from "./Notifications"
 import Product from "./Product"
+import fakebazaar from "../fakebazaar.png"
 
 const provider = new GoogleAuthProvider()
 
@@ -44,8 +45,8 @@ export default function Layout() {
 		<div>
 			<nav className="navbar navbar-expand-lg navbar-light bg-navbar">
 				<div className="container-fluid">
-					<a className="navbar-brand" href="/">
-						FakeBazaar
+					<a className="navbar-brand pt-0" href="/">
+						<img src={fakebazaar} width={115} alt="FakeBazaar" />
 					</a>
 					<button
 						className="navbar-toggler"
