@@ -3,7 +3,7 @@ import { FirebaseContext } from "../Contexts/FirebaseContext"
 import { StoreContext } from "../Contexts/StoreContext"
 import { useNavigate } from "react-router-dom"
 
-export default function Cart() {
+export default function Cart({ login }) {
 	const navigate = useNavigate()
 	const { user } = useContext(FirebaseContext)
 	const { cart, setCart, products } = useContext(StoreContext)
@@ -29,10 +29,7 @@ export default function Cart() {
 									Checkout
 								</button>
 							) : (
-								<button
-									className="btn btn-warning btn-block w-50 mx-auto"
-									data-bs-toggle="modal"
-									data-bs-target="#authenticateModal">
+								<button className="btn btn-warning btn-block w-50 mx-auto" onClick={login}>
 									Login to Checkout
 								</button>
 							)}
