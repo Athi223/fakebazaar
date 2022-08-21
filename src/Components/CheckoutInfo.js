@@ -4,12 +4,12 @@ import { StoreContext } from "../Contexts/StoreContext"
 import { CheckoutContext } from "../Contexts/CheckoutContext"
 import { FirebaseContext } from "../Contexts/FirebaseContext"
 import { BootstrapContext } from "../Contexts/BootstrapContext"
-import { ref, child, get, push } from "firebase/database"
+import { ref, child, get, push, set } from "firebase/database"
 
 export default function CheckoutInfo({ setProgress }) {
 	const navigate = useNavigate()
 	const { cart, setCart, products } = useContext(StoreContext)
-	const { payment, setCheckoutPath, checkoutButton, setCheckoutButton } = useContext(CheckoutContext)
+	const { payment, shipping, setCheckoutPath, checkoutButton, setCheckoutButton } = useContext(CheckoutContext)
 	const { database, user } = useContext(FirebaseContext)
 	const { bootstrap } = useContext(BootstrapContext)
 	const [amount, setAmount] = useState(0)
@@ -39,9 +39,28 @@ export default function CheckoutInfo({ setProgress }) {
 								const checkoutResult = bootstrap.Toast.getInstance("#checkoutResult")
 								checkoutResult.show()
 								const _user = JSON.parse(user)
-								push(child(ref(database), "users/" + _user.uid + "/orders/"), cart ?? [])
-									.then(() => setCart([]))
-									.catch(error => console.error(error))
+								let shippingDetails = { ...shipping }
+								delete shippingDetails.saveDetails
+								if (shipping.saveDetails) {
+									set(child(ref(database), `users/${_user.uid}/shipping`), shippingDetails)
+										.then(() => setCart([]))
+										.catch(error => console.error(error))
+									push(child(ref(database), `users/${_user.uid}/orders/`), {
+										shipping: "default",
+										products: cart ?? [],
+										date: new Date().toLocaleDateString("en-GB"),
+									})
+										.then(() => setCart([]))
+										.catch(error => console.error(error))
+								} else {
+									push(child(ref(database), `users/${_user.uid}/orders/`), {
+										shipping: shippingDetails,
+										products: cart ?? [],
+										date: new Date().toLocaleDateString("en-GB"),
+									})
+										.then(() => setCart([]))
+										.catch(error => console.error(error))
+								}
 								setCheckoutPath("/checkout/confirmation")
 							} else {
 								alert(result[0].reason)

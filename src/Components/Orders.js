@@ -10,7 +10,7 @@ export default function Orders() {
 
 	useEffect(() => {
 		const _user = JSON.parse(user)
-		get(child(ref(database), "users/" + _user.uid + "/orders/"))
+		get(child(ref(database), `users/${_user.uid}/orders/`))
 			.then(snapshot => {
 				if (snapshot.exists()) {
 					setOrders(snapshot.val())
@@ -25,12 +25,17 @@ export default function Orders() {
 			{products.length && orders ? (
 				Object.keys(orders).map((orderId, orderIndex) => (
 					<div key={orderIndex} className="border rounded p-2">
-						<h4>
-							OrderID: <span className="text-secondary">{orderId}</span>
-						</h4>
+						<div className="row">
+							<div className="col-12 col-md-8 h4">
+								OrderID: <span className="text-secondary">{orderId}</span>
+							</div>
+							<div className="col-12 col-md-4 text-md-end h4">
+								Date: <span className="text-secondary">{orders[orderId].date}</span>
+							</div>
+						</div>
 						<div className="d-flex flex-row flex-nowrap overflow-auto">
-							{orders[orderId].map((id, index) => (
-								<div key={index} className="card text-center me-3" style={{ minWidth: 300 }}>
+							{orders[orderId].products.map((id, index) => (
+								<div key={index} className="card text-center me-3 my-3" style={{ minWidth: 300 }}>
 									<img
 										src={products[id].image_url.replace("/s/", "/m/").replace("/mm/", "/m/")}
 										className="card-img-top"
