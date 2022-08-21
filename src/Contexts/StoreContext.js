@@ -53,7 +53,7 @@ export default function StoreProvider({ children }) {
 		if (user) {
 			const _user = JSON.parse(user)
 			if (cart !== null) {
-				set(child(ref(database), "users/" + _user.uid + "/cart/"), cart ?? [])
+				set(child(ref(database), `users/${_user.uid}/cart/`), cart ?? [])
 			}
 		}
 	}, [user, cart, database])
