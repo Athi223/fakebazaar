@@ -14,6 +14,7 @@ import PaymentDetails from "./Components/PaymentDetails"
 import Confirmation from "./Components/Confirmation"
 import Orders from "./Components/Orders"
 import RequireAuth from "./Components/RequireAuth"
+import Search from "./Components/Search"
 
 export default function App() {
 	return (
@@ -23,12 +24,12 @@ export default function App() {
 					<Routes>
 						<Route path="/" element={<Layout />}>
 							<Route index element={<Home />} />
-							<Route path="categories" element={<Categories />} />
+							<Route path="categories" element={<Categories />}>
+								<Route path=":category" element={<Categories />} />
+							</Route>
 							<Route path="checkout" element={<Checkout />}>
 								<Route index element={<PreviewCart />} />
-
 								<Route path="shipping" element={<ShippingDetails />} />
-
 								<Route path="payment" element={<PaymentDetails />} />
 								<Route path="confirmation" element={<Confirmation />} />
 							</Route>
@@ -40,6 +41,7 @@ export default function App() {
 									</RequireAuth>
 								}
 							/>
+							<Route path="search/:query" element={<Search />} />
 						</Route>
 					</Routes>
 				</StoreProvider>
