@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { NavLink, Outlet } from "react-router-dom"
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom"
 import { FirebaseContext } from "../Contexts/FirebaseContext"
 import { StoreContext } from "../Contexts/StoreContext"
 import { LogIn, ShoppingCart, User } from "react-feather"
@@ -12,8 +12,10 @@ import fakebazaar from "../fakebazaar.png"
 const provider = new GoogleAuthProvider()
 
 export default function Layout() {
+	const navigate = useNavigate()
+	const location = useLocation()
 	const { user, setUser } = useContext(FirebaseContext)
-	const { cart } = useContext(StoreContext)
+	const { cart, categories } = useContext(StoreContext)
 
 	const login = () => {
 		const auth = getAuth()
@@ -41,13 +43,27 @@ export default function Layout() {
 			.catch(error => console.error(error))
 	}
 
+	const search = e => {
+		e.preventDefault()
+		const query = e.target.querySelector("input[type=search]").value
+		navigate(`/search/${query}`)
+	}
+
 	return (
 		<div>
-			<nav className="navbar navbar-expand-lg navbar-light bg-navbar">
+			<nav className="navbar navbar-expand-lg navbar-light bg-navbar sticky-top">
 				<div className="container-fluid">
 					<a className="navbar-brand pt-0" href="/">
 						<img src={fakebazaar} width={115} alt="FakeBazaar" />
 					</a>
+					<form className="d-flex flex-grow-1" role="search" onSubmit={search}>
+						<input
+							className="form-control me-2"
+							type="search"
+							placeholder="Search a Product"
+							aria-label="Search"
+						/>
+					</form>
 					<button
 						className="navbar-toggler"
 						data-bs-toggle="collapse"
@@ -65,9 +81,27 @@ export default function Layout() {
 								</NavLink>
 							</li>
 							<li className="nav-item">
-								<NavLink className="nav-link" to="/categories">
-									Categories
-								</NavLink>
+								<div
+									className={`nav-link dropdown ${
+										location.pathname.includes("categories") ? "active" : ""
+									}`}>
+									<span
+										className="dropdown-toggle"
+										role="button"
+										data-bs-toggle="dropdown"
+										aria-expanded="false">
+										Categories
+									</span>
+									<ul className="dropdown-menu">
+										{categories.map(category => (
+											<li key={category}>
+												<NavLink to={`/categories/${category}`} className="dropdown-item">
+													{category}
+												</NavLink>
+											</li>
+										))}
+									</ul>
+								</div>
 							</li>
 							{user && (
 								<li className="nav-item">
