@@ -18,27 +18,63 @@ export default function Home() {
 	}, [products])
 
 	return (
-		<div className="m-4">
-			<h3 className="text-center text-primary mb-3">Highest Discounts!</h3>
-			<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
-				{discountedProducts
-					.filter((_, index) => index < 12)
-					.map((product, index) => (
-						<div className="col" key={index}>
-							<Card product={product} />
+		<div className="m-3">
+			<div className="accordion" id="accordionHome">
+				<div className="accordion-item">
+					<h2 className="accordion-header" id="headingDiscounts">
+						<button
+							className="accordion-button fs-4"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#collapseDiscounts"
+							aria-expanded="true"
+							aria-controls="collapseDiscounts">
+							Highest Discounts!
+						</button>
+					</h2>
+					<div
+						id="collapseDiscounts"
+						className="accordion-collapse collapse show"
+						aria-labelledby="headingDiscounts">
+						<div className="accordion-body bg-secondary py-4" style={{ "--bs-bg-opacity": 0.75 }}>
+							<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+								{discountedProducts
+									.filter((_, index) => index < 12)
+									.map((product, index) => (
+										<div className="col" key={index}>
+											<Card product={product} />
+										</div>
+									))}
+							</div>
 						</div>
-					))}
-			</div>
-			<hr className="my-4" />
-			<h3 className="text-center text-primary mb-3">Highest Rated!</h3>
-			<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
-				{highestRatedProducts
-					.filter((_, index) => index < 12)
-					.map((product, index) => (
-						<div className="col" key={index}>
-							<Card product={product} />
+					</div>
+				</div>
+				<div className="accordion-item">
+					<h2 className="accordion-header" id="headingRated">
+						<button
+							className="accordion-button fs-4"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#collapseRated"
+							aria-expanded="true"
+							aria-controls="collapseRated">
+							Highest Rated!
+						</button>
+					</h2>
+					<div id="collapseRated" className="accordion-collapse collapse show" aria-labelledby="headingRated">
+						<div className="accordion-body bg-secondary py-4" style={{ "--bs-bg-opacity": 0.75 }}>
+							<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+								{highestRatedProducts
+									.filter((_, index) => index < 12)
+									.map((product, index) => (
+										<div className="col" key={index}>
+											<Card product={product} />
+										</div>
+									))}
+							</div>
 						</div>
-					))}
+					</div>
+				</div>
 			</div>
 		</div>
 	)
