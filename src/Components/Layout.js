@@ -92,7 +92,7 @@ export default function Layout() {
 										aria-expanded="false">
 										Categories
 									</span>
-									<ul className="dropdown-menu">
+									<ul className="dropdown-menu mt-0">
 										{categories.map(category => (
 											<li key={category}>
 												<NavLink to={`/categories/${category}`} className="dropdown-item">
