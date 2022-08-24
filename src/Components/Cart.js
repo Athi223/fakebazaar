@@ -18,7 +18,7 @@ export default function Cart({ login }) {
 				<button className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			</div>
 			<div className="offcanvas-body">
-				{cart && cart.length ? (
+				{cart?.length ? (
 					<div>
 						<div className="d-grid">
 							{user ? (

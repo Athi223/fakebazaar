@@ -127,7 +127,7 @@ export default function Layout() {
 									aria-controls="Cart"
 								/>
 								<span className="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger">
-									{cart && cart.length ? cart.length : null}
+									{cart?.length ? cart.length : null}
 								</span>
 							</button>
 							{user ? (

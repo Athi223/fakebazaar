@@ -7,7 +7,7 @@ export default function PreviewCart() {
 
 	return (
 		<div className="container-fluid">
-			{cart && cart.length ? (
+			{cart?.length ? (
 				<div className="text-center">
 					<h3 className="mb-4">Preview your Cart</h3>
 					<div className="d-flex flex-row flex-nowrap overflow-auto">

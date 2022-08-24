@@ -77,11 +77,11 @@ export default function CheckoutInfo({ setProgress }) {
 	}
 
 	useEffect(() => {
-		setAmount((cart && cart.reduce((acc, productId) => acc + products[productId].sale_price, 0)) || 0)
+		setAmount(cart?.reduce((acc, productId) => acc + products[productId].sale_price, 0) || 0)
 		switch (location.pathname) {
 			case "/checkout":
 				setCheckoutButton({
-					text: cart && cart.length ? "Add Shipping Details" : "Continue Shopping",
+					text: cart?.length ? "Add Shipping Details" : "Continue Shopping",
 					disabled: false,
 				})
 				setProgress("25%")

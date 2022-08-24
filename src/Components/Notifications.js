@@ -17,7 +17,7 @@ export default function Notification() {
 					<button type="button" className="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 				</div>
 				<div className="toast-body">
-					{cart && cart.length ? <b>{products[cart[cart.length - 1]].title}</b> : null} was added to cart
+					{cart?.length ? <b>{products[cart[cart.length - 1]].title}</b> : null} was added to cart
 					successfully!
 				</div>
 			</div>
