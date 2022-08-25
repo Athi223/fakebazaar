@@ -53,7 +53,7 @@ export default function Layout() {
 		<div>
 			<nav className="navbar navbar-expand-lg navbar-light bg-navbar sticky-top">
 				<div className="container-fluid">
-					<a className="navbar-brand pt-0" href="/">
+					<a className="navbar-brand pt-0" href={process.env.PUBLIC_URL}>
 						<img src={fakebazaar} width={115} alt="FakeBazaar" />
 					</a>
 					<form className="d-flex flex-grow-1" role="search" onSubmit={search}>
