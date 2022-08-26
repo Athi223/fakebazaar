@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/fakebazaar/static/css/main.ba4ab0f0.css",
-    "main.js": "/fakebazaar/static/js/main.3552db93.js",
+    "main.js": "/fakebazaar/static/js/main.1f0f2df8.js",
     "static/media/fakebazaar.png": "/fakebazaar/static/media/fakebazaar.fd6d0b1ae0804ea5ce13.png",
     "index.html": "/fakebazaar/index.html",
     "main.ba4ab0f0.css.map": "/fakebazaar/static/css/main.ba4ab0f0.css.map",
-    "main.3552db93.js.map": "/fakebazaar/static/js/main.3552db93.js.map"
+    "main.1f0f2df8.js.map": "/fakebazaar/static/js/main.1f0f2df8.js.map"
   },
   "entrypoints": [
     "static/css/main.ba4ab0f0.css",
-    "static/js/main.3552db93.js"
+    "static/js/main.1f0f2df8.js"
   ]
 }
