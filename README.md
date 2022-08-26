@@ -24,6 +24,28 @@ This is a project to learn and combine concepts like React Context API, React Ro
 
 <hr />
 
+## Dataset
+
+You can find the dataset & script to populate it in `populate_firebase/` directory.
+
+> To populate the dataset, follow the instructions in `populate_firebase/README.md`.
+
+Credits: [BigBasket Products Dataset](https://www.kaggle.com/datasets/hetulmehta/bigbasket-products-dataset)
+
+<hr />
+
+## Instructions
+
+Use the following steps to run the project locally:
+
+<ol>
+	<li>Clone this repo</li>
+	<li>Run `npm i` to install all dependencies</li>
+	<li>Run `npm start` to start the server</li>
+</ol>
+
+<hr />
+
 ## Technologies and Frameworks used:
 
 <ol>
