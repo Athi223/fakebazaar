@@ -9,7 +9,7 @@ export default function Product() {
 	const addToCart = id => {
 		const addedToCart = bootstrap.Toast.getInstance("#addedToCart")
 		addedToCart.show()
-		setCart(cart => [...cart, id])
+		setCart(cart => (cart === null ? [id] : [...cart, id]))
 	}
 	return (
 		<div
