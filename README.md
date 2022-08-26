@@ -15,11 +15,11 @@ This is a project to learn and combine concepts like React Context API, React Ro
 ## Features
 
 <ol>
-	<li>**Home**: To highlight products with highest discounts, ratings.</li>
-	<li>**Categories**: To view products based on category.</li>
-	<li>**Search**: To search for products based on name.</li>
-	<li>**Cart**: To view products in cart and checkout.</li>
-	<li>**Orders**: To view past orders.</li>
+	<li><b>Home</b>: To highlight products with highest discounts, ratings.</li>
+	<li><b>Categories</b>: To view products based on category.</li>
+	<li><b>Search</b>: To search for products based on name.</li>
+	<li><b>Cart</b>: To view products in cart and checkout.</li>
+	<li><b>Orders</b>: To view past orders.</li>
 </ol>
 
 <hr />
@@ -40,8 +40,8 @@ Use the following steps to run the project locally:
 
 <ol>
 	<li>Clone this repo</li>
-	<li>Run `npm i` to install all dependencies</li>
-	<li>Run `npm start` to start the server</li>
+	<li>Run <code>npm i</code> to install all dependencies</li>
+	<li>Run <code>npm start</code> to start the server</li>
 </ol>
 
 <hr />
