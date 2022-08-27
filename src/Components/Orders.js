@@ -24,7 +24,7 @@ export default function Orders() {
 			<h3 className="text-center mb-4">Orders</h3>
 			{products.length && orders ? (
 				Object.keys(orders).map((orderId, orderIndex) => (
-					<div key={orderIndex} className="border rounded p-2">
+					<div key={orderIndex} className="border rounded p-3 mb-3">
 						<div className="row">
 							<div className="col-12 col-md-8 h4">
 								OrderID: <span className="text-secondary">{orderId}</span>
