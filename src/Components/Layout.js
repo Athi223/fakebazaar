@@ -119,17 +119,19 @@ export default function Layout() {
 							)}
 						</ul>
 						<div className="btn-group" role="group">
-							<button className="btn">
-								<ShoppingCart
-									size={20}
-									data-bs-toggle="offcanvas"
-									data-bs-target="#Cart"
-									aria-controls="Cart"
-								/>
-								<span className="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger">
-									{cart?.length ? cart.length : null}
-								</span>
-							</button>
+							{location.pathname.startsWith("/checkout") ? null : (
+								<button className="btn">
+									<ShoppingCart
+										size={20}
+										data-bs-toggle="offcanvas"
+										data-bs-target="#Cart"
+										aria-controls="Cart"
+									/>
+									<span className="position-absolute top-10 start-90 translate-middle badge rounded-pill bg-danger">
+										{cart?.length ? cart.length : null}
+									</span>
+								</button>
+							)}
 							{user ? (
 								<div className="dropdown">
 									<button
