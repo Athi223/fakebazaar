@@ -36,7 +36,7 @@ export default function ShippingDetails() {
 								Phone Number (with Country Code)
 							</label>
 							<input
-								type="number"
+								type="tel"
 								id="phonenumber"
 								minLength={10}
 								maxLength={10}
