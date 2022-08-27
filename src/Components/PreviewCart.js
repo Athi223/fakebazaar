@@ -8,8 +8,21 @@ export default function PreviewCart() {
 	return (
 		<div className="container-fluid">
 			{cart?.length ? (
-				<div className="text-center">
-					<h3 className="mb-4">Preview your Cart</h3>
+				<div className="border rounded p-3">
+					<div className="row mb-3">
+						<h4 className="col-12 col-md-6">
+							Total items: <span className="text-primary">{cart?.length}</span>
+						</h4>
+						<h4 className="col-12 col-md-6 text-md-end">
+							Total Savings: ₹
+							<span className="text-success">
+								{cart.reduce(
+									(total, id) => products[id].market_price - products[id].sale_price + total,
+									0
+								)}
+							</span>
+						</h4>
+					</div>
 					<div className="d-flex flex-row flex-nowrap overflow-auto">
 						{cart.map((id, index) => (
 							<div key={index} className="card text-center me-3 mb-3" style={{ minWidth: 300 }}>
@@ -55,8 +68,8 @@ export default function PreviewCart() {
 					</div>
 				</div>
 			) : (
-				<div className="text-center p-4">
-					<h5 className="mb-3">Your cart is empty!</h5>
+				<div className="container-fluid">
+					<h3 className="text-center">Your cart is empty!</h3>
 				</div>
 			)}
 		</div>
