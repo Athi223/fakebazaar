@@ -30,8 +30,8 @@ export default function CheckoutInfo({ setProgress }) {
 							.val()
 							.filter(
 								card =>
-									card.number === parseInt(payment.cardnumber) &&
-									card.expiry === parseInt(payment.expirydate) &&
+									card.number === payment.cardnumber &&
+									card.expiry === payment.expirydate &&
 									card.cvv === parseInt(payment.cvv)
 							)
 						if (result.length > 0) {
