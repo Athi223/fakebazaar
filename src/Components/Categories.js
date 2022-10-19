@@ -10,7 +10,7 @@ export default function Categories() {
 	return category ? (
 		categories.includes(category) ? (
 			<div className="m-4">
-				<h4>{category}</h4>
+				<h3 className="text-center">{category}</h3>
 				<hr />
 				<div className="bg-secondary p-4 rounded" style={{ "--bs-bg-opacity": 0.75 }}>
 					<div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-5">
